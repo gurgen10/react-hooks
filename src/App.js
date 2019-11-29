@@ -9,6 +9,9 @@ const AddTodo = React.lazy(() => import('./AddTodo'));
 function App() {
   const [ todos, setTodoes] = useState([]);
   const [ loading, setLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState('');
+
   
 
   useEffect(() => {
@@ -33,34 +36,47 @@ function App() {
   }
 
   function removeTodo(id) {
-    setTodoes(todos.filter(todo => todo.id !== id))
+    try {
+      if(isError) {
+        throw Error('remove error')
+      }
+      console.log(isError);
+      setTodoes(todos.filter(todo => todo.id !== id))
+
+    } catch (err) {
+      setError(err);
+
+    }
+    
   }
 
   function addTodo(title) {
     let newTodos = [];
-    let todo = {
-      title: title,
-      id: Date.now(),
-      complated: false
-    }
-    todos.push(todo);
+    todos.push({
+        title: title,
+        id: Date.now(),
+        complated: false
+      }
+    );
     newTodos.push(...todos);
     setTodoes(newTodos);
-
   }
-  const [isError, setIsError] = useState(false);
+
   function makeError() {
-    setIsError(true);
-  }
-  if(isError) {
-    throw new Error('Opps');
+    setIsError(!isError);
   }
 
+
+  // if(isError) {
+  //   throw new Error('heeey guys');
+  // }
+  if(error) throw  Error(error);
   return (
     
     <Context.Provider value={{toggleTodo, removeTodo, todos}}>
+      
       <div className="wrapper">
-        <button onClick={makeError}>Make Error</button>
+      <button onClick={makeError}>Make Error <b style={{color: isError? 'red' : 'green'}}>{isError.toString().toUpperCase()}</b></button>
       <h1>React Hooks</h1>
       <React.Suspense fallback={<p>Loading...</p>}>
         <AddTodo onCreate={addTodo}/>
