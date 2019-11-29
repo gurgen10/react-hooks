@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types'
 
 import ToDoItem from './ToDoItem'
+import Context from './context';
 
 const style = {
     ul: {
@@ -13,11 +14,12 @@ const style = {
 }
 
 function TodoList (props) {
+    const { todos } = useContext(Context)
     return (
         <>
         <h3>To do list</h3>
         <ul style={style.ul}>
-        {props.todos.map( (todo, index) => {
+        { todos.map( (todo, index) => {
             return (<ToDoItem key={todo.id} todo={todo} index={index}/>)
         })}
         </ul>
@@ -25,7 +27,7 @@ function TodoList (props) {
     );
 }
 TodoList.propTypes = {
-    todos: PropTypes.arrayOf(PropTypes.object).isRequired
+    todos: PropTypes.arrayOf(PropTypes.object)
 
 }
 
