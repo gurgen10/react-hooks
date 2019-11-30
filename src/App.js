@@ -3,12 +3,14 @@ import './App.css';
 import TodoList from './TodoList';
 import Context from  './context';
 import Loader from './loader';
+import Counter from "./Counter";
 
 const AddTodo = React.lazy(() => import('./AddTodo'));
 
 function App() {
   const [ todos, setTodoes] = useState([]);
   const [ loading, setLoading] = useState(true);
+  const [ count, setCount] = useState(0);
   
 
   useEffect(() => {
@@ -59,6 +61,10 @@ function App() {
   return (
     
     <Context.Provider value={{toggleTodo, removeTodo, todos}}>
+      <Counter 
+        count={count} 
+        onCountDown={() => setCount(count + 1)} 
+        onCountUp={() => setCount(count - 1)}/>
       <div className="wrapper">
         <button onClick={makeError}>Make Error</button>
       <h1>React Hooks</h1>
