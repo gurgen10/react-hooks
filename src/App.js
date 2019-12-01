@@ -9,9 +9,7 @@ const AddTodo = React.lazy(() => import('./AddTodo'));
 
 function App() {
   const [ todos, setTodoes] = useState([]);
-  const [ loading, setLoading] = useState(true);
-  const [ count, setCount] = useState(0);
-  
+  const [ loading, setLoading] = useState(true);  
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
@@ -60,11 +58,8 @@ function App() {
 
   return (
     
-    <Context.Provider value={{toggleTodo, removeTodo, todos}}>
-      <Counter 
-        count={count} 
-        onCountDown={() => setCount(count + 1)} 
-        onCountUp={() => setCount(count - 1)}/>
+    <Context.Provider value={{ toggleTodo, removeTodo, todos }}>
+      <Counter />
       <div className="wrapper">
         <button onClick={makeError}>Make Error</button>
       <h1>React Hooks</h1>

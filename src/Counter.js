@@ -1,5 +1,5 @@
 import React from "react";
-import logHoc from "./hoc/log-hoc";
+import LogHoc from "./hoc/LogHoc";
 
 const style = {
     mainDiv: {
@@ -13,13 +13,19 @@ const style = {
     }
 }
 
-function Counter ({ count, onCountUp, onCountDown}) {
-    return (
-        <div style={style.mainDiv}>
-            <button onClick={onCountDown} style={style.cildren}>-</button>
-            <div style={style.cildren}>{count}</div>
-            <button style={style.cildren} onClick={onCountUp}>+</button>
-        </div>
-    )
+class Counter extends React.Component {
+    render (){
+        const { count, onCountUp, onCountDown, name } = this.props;
+        return (
+            <>
+              <h2>Owner {name}</h2>
+              <div style={style.mainDiv}>
+                <button onClick={onCountDown} style={style.cildren}>-</button>
+                <div style={style.cildren}>{count}</div>
+                <button onClick={onCountUp} style={style.cildren}>+</button>
+              </div>
+            </>
+        )
+    }
 }
-export default logHoc(Counter);
+export default LogHoc(Counter);
