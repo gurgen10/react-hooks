@@ -3,16 +3,15 @@ import './App.css';
 import TodoList from './TodoList';
 import Context from  './context';
 import Loader from './loader';
+import Counter from "./Counter";
 
 const AddTodo = React.lazy(() => import('./AddTodo'));
 
 function App() {
-  const [ todos, setTodoes] = useState([]);
-  const [ loading, setLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [error, setError] = useState('');
-
-  
+  const [ todos, setTodoes ] = useState([]);
+  const [ loading, setLoading ] = useState(true);
+  const [ isError, setIsError ] = useState(false);
+  const [ error, setError ] = useState('');
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
@@ -73,8 +72,8 @@ function App() {
   if(error) throw  Error(error);
   return (
     
-    <Context.Provider value={{toggleTodo, removeTodo, todos}}>
-      
+    <Context.Provider value={{ toggleTodo, removeTodo, todos }}>
+      <Counter />
       <div className="wrapper">
       <button onClick={makeError}>Make Error <b style={{color: isError? 'red' : 'green'}}>{isError.toString().toUpperCase()}</b></button>
       <h1>React Hooks</h1>
